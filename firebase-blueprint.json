@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "user": {
+      "title": "User",
+      "description": "A user of the AaharNet application (Admin, Principal, Staff)",
+      "type": "object",
+      "properties": {
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "principal", "staff"] },
+        "schoolId": { "type": "string" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["firstName", "lastName", "email", "role"]
+    },
+    "school": {
+      "title": "School",
+      "description": "A school in the AaharNet system",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "schoolCode": { "type": "string" },
+        "address": { "type": "string" },
+        "totalStudents": { "type": "integer" },
+        "createdAt": { "type": "integer" }
+      },
+      "required": ["name", "schoolCode"]
+    },
+    "stockInventory": {
+      "title": "Stock Inventory",
+      "description": "Inventory of stock for a particular school",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "itemName": { "type": "string" },
+        "quantity": { "type": "integer" },
+        "unit": { "type": "string" },
+        "lastUpdated": { "type": "integer" }
+      },
+      "required": ["schoolId", "itemName", "quantity", "unit"]
+    },
+    "dailyMeal": {
+      "title": "Daily Meal",
+      "description": "Record of daily meals served in a school",
+      "type": "object",
+      "properties": {
+        "schoolId": { "type": "string" },
+        "date": { "type": "string" },
+        "studentsServed": { "type": "integer" },
+        "mealType": { "type": "string" }
+      },
+      "required": ["schoolId", "date", "studentsServed", "mealType"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/user" },
+      "description": "Users collection"
+    },
+    "/schools/{schoolId}": {
+      "schema": { "$ref": "#/entities/school" },
+      "description": "Schools collection"
+    },
+    "/stockInventory/{itemId}": {
+      "schema": { "$ref": "#/entities/stockInventory" },
+      "description": "Stock inventory items"
+    },
+    "/dailyMeals/{mealId}": {
+      "schema": { "$ref": "#/entities/dailyMeal" },
+      "description": "Daily meals records"
+    }
+  }
+}
